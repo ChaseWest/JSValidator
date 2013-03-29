@@ -33,24 +33,24 @@ The following input types are defined by default:
 
 ##Options
 
-	#####General
+#####General
 
 	`error: "CSS Class Name for errors"`
   `success: "CSS Class Name for successes"`
 
-  #####Rules
+#####Rules
 
-  `options.date`:
+The object `options.date`:
 
-  `date: {
+  date: {
             separator: "/",
             regex: /^(0[1-9]|[1-9]|1[012])[- //.](0[1-9]|[1-9]|[12][0-9]|3[01])[- //.][(19|20)\d\d]|[\d\d]$/,
             message: "Invalid Date - Please ensure date values are within their correct ranges."
-   			 }`
+   			 }
 
- 	Corresponds to an object within `options.rules` with the same name (`date`):
+Corresponds to an object within `options.rules` with the same name (`date`):
 
- 	`"date": {
+ 	"date": {
                 isDate: function(val) {
                     var date = parseDate(val);
 
@@ -65,4 +65,4 @@ The following input types are defined by default:
                         "status": options.date.regex.test(val)
                     };
                 }
-            }`
+            }
