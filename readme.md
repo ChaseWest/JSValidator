@@ -35,8 +35,11 @@ The following input types are defined by default:
 
 #####General
 
-	`error: "CSS Class Name for errors"`
-  `success: "CSS Class Name for successes"`
+	error: "CSS Class Name for errors",
+	success: "CSS Class Name for successes",
+	WriteTo: {
+		container: "Container element ID to log errors"
+	},
 
 #####Rules
 

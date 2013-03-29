@@ -5,6 +5,7 @@ var validator = (function(o) {
     var options = {
         error: "error",
         success: "success",
+        event: "change",
         color: {
             regex: /^#[0-9a-f]{3}([0-9a-f]{3})?$/i,
             message: "Invalid Color - Please ensure the color is in the form #FFF, #FFFFFF, #fff, etc..."
@@ -53,31 +54,31 @@ var validator = (function(o) {
             container: "printErrors"
         },
         rules: {
-            "color": {
+            color: {
                 isColor: function(val) {
                     return {
-                        "message": options.color.message,
-                        "status": options.color.regex.test(val)
+                        message: options.color.message,
+                        status: options.color.regex.test(val)
                     };
                 }
             },
-            "date": {
+            date: {
                 isDate: function(val) {
                     var date = parseDate(val);
 
                     return {
-                        "message": options.date.message,
-                        "status": (date.month > 0 && date.month <= 12) && (date.day > 0 && date.day <= 31) && (date.year.length === 2 || date.year.length === 4)
+                        message: options.date.message,
+                        status: (date.month > 0 && date.month <= 12) && (date.day > 0 && date.day <= 31) && (date.year.length === 2 || date.year.length === 4)
                     };
                 },
                 matchDateFormat: function(val) {
                     return {
-                        "message": "Invalid Date - Please ensure the date is in the form mm/dd/yyyy or mm/dd/yy",
-                        "status": options.date.regex.test(val)
+                        message: "Invalid Date - Please ensure the date is in the form mm/dd/yyyy or mm/dd/yy",
+                        status: options.date.regex.test(val)
                     };
                 }
             },
-            "datetime": {
+            datetime: {
                 isDateTime: function(val) {
                     if (val.indexOf(" ") !== -1) {
                         var split = val.split(" "),
@@ -85,111 +86,111 @@ var validator = (function(o) {
                             time = parseTime(split[1]);
                     } else {
                         return {
-                            "message": "Invalid Date/Time - Date and time values must be seperated with a single space.",
-                            "status": false
+                            message: "Invalid Date/Time - Date and time values must be seperated with a single space.",
+                            status: false
                         };
                     }
 
                     return {
-                        "message": options.datetime.message,
-                        "status": ((date.month > 0 && date.month <= 12) && (date.day > 0 && date.day <= 31) && (date.year.length === 4) && (convert(time.hours, "int") >= 0 && convert(time.hours, "int") <= 24) && (convert(time.minutes, "int") >= 0 && convert(time.minutes, "int") <= 59) && (convert(time.seconds, "int") >= 0 && convert(time.seconds, "int") <= 59))
+                        message: options.datetime.message,
+                        status: ((date.month > 0 && date.month <= 12) && (date.day > 0 && date.day <= 31) && (date.year.length === 4) && (parseInt(time.hours, 10) >= 0 && parseInt(time.hours, 10) <= 24) && (parseInt(time.minutes, 10) >= 0 && parseInt(time.minutes, 10) <= 59) && (parseInt(time.seconds, 10) >= 0 && parseInt(time.seconds, 10) <= 59))
                     };
 
                 }
             },
-            "email": {
+            email: {
                 isEmail: function(val) {
                     return {
-                        "message": options.email.message,
-                        "status": options.email.regex.test(val)
+                        message: options.email.message,
+                        status: options.email.regex.test(val)
                     };
                 }
             },
-            "month": {
+            month: {
                 isMonth: function(val) {
                     return {
-                        "message": options.month.message,
-                        "status": (convert(val, "int") > 0 && convert(val, "int") <= 12)
+                        message: options.month.message,
+                        status: (parseInt(val, 10) > 0 && parseInt(val, 10) <= 12)
                     };
                 }
             },
-            "number": {
+            number: {
                 isNumber: function(val) {
                     return {
-                        "message": options.number.message,
-                        "status": (!isNaN(convert(val, "float")) && isFinite(val))
+                        message: options.number.message,
+                        status: (!isNaN(parseFloat(val)) && isFinite(val))
                     };
                 }
             },
-            "range": {
+            range: {
                 isBetween: function(val) {
                     if (val.indexOf("-")) {
                         var split = val.split("-"),
-                            left = convert(split[0], "float"),
-                            right = convert(split[1], "float");
+                            left = parseFloat(split[0]),
+                            right = parseFloat(split[1]);
 
                         return {
-                            "message": options.range.message,
-                            "status": left < right
+                            message: options.range.message,
+                            status: left < right
                         };
                     } else {
                         return {
-                            "message": "Range values must contain two digits separated by a '-'.",
-                            "status": false
+                            message: "Range values must contain two digits separated by a '-'.",
+                            status: false
                         };
                     }
                 }
             },
-            "required": {
+            required: {
                 isEmpty: function(val) {
                     return {
-                        "message": options.required.message,
-                        "status": trimString(val) !== ""
+                        message: options.required.message,
+                        status: trimString(val) !== ""
                     };
                 }
             },
-            "search": {
+            search: {
                 isSearch: function(val) {
                     //TODO
                 }
             },
-            "tel": {
+            tel: {
                 isTel: function(val) {
                     return {
-                        "message": options.tel.message,
-                        "status": options.tel.regex.test(val)
+                        message: options.tel.message,
+                        status: options.tel.regex.test(val)
                     };
                 }
             },
-            "time": {
+            time: {
                 isTime: function(val) {
                     var time = parseTime(val);
 
                     return {
-                        "message": options.time.message,
-                        "status": ((convert(time.hours, "int") >= 0 && convert(time.hours, "int") <= 24) && (convert(time.minutes, "int") >= 0 && convert(time.minutes, "int") <= 59) && (convert(time.seconds, "int") >= 0 && convert(time.seconds, "int") <= 59))
+                        message: options.time.message,
+                        status: ((parseFloat(time.hours, 10) >= 0 && parseInt(time.hours, 10) <= 24) && (parseInt(time.minutes, 10) >= 0 && parseInt(time.minutes, 10) <= 59) && (parseInt(time.seconds, 10) >= 0 && parseInt(time.seconds, 10) <= 59))
                     };
                 },
                 matchTimeFormat: function(val) {
                     return {
-                        "message": "Please ensure the time is in the form hh:mm:ss",
-                        "status": options.time.regex.test(val)
+                        message: "Please ensure the time is in the form hh:mm:ss",
+                        status: options.time.regex.test(val)
                     };
                 }
             },
-            "url": {
+            url: {
                 isURL: function(val) {
                     return {
-                        "message": options.url.message,
-                        "status": options.url.regex.test(val)
+                        message: options.url.message,
+                        status: options.url.regex.test(val)
                     };
                 }
             },
-            "week": {
+            week: {
                 isWeek: function(val) {
                     return {
-                        "message": options.week.message,
-                        "status": (convert(val, "int") > 0 && convert(val, "int") <= 52)
+                        message: options.week.message,
+                        status: (parseInt(val, 10) > 0 && parseInt(val, 10) <= 52)
                     };
                 }
             }
@@ -201,18 +202,18 @@ var validator = (function(o) {
     /* Set up validation  */
     var validation = (function(rules) {
 
-        //use querySelectorAll if it's available
-        var requiredElements = (document.querySelectorAll ? document.querySelectorAll(".required") : document.getElementsByClassName("required"));
-
         var print = document.getElementById(options.writeTo.container) || null;
 
         //event handler
         var handler = function(e) {
-            var target = (!e ? window.event.srcElement : e.target);
+            var target = (e.target ? e.target : window.event.srcElement);
+
 
             if (hasClass(target, "required")) {
-                var classes = target.getAttribute("class").split(" ");
+                var classes = (target.getAttribute("class") ? target.getAttribute("class").split(" ") : target.className.split(" "));
                 var errors = [];
+
+                console.log(classes);
 
                 //for each class
                 for (var i = 0; i < classes.length; i++) {
@@ -230,20 +231,30 @@ var validator = (function(o) {
                 } //end for each class
 
                 if (print !== null) {
-                    print.innerText = "";
+                    print.innerHTML = "";
                     for (var e in errors) {
-                        if (errors[e] !== true) print.innerText += errors[e].message + "\n";
+                        if(errors.hasOwnProperty(e))
+                            print.innerHTML += errors[e].message + "<br/>";
                     }
                 }
-
                 (errors.length > 0 ? setError(target) : setSuccess(target));
             }
         }
 
         //Set a global event to the document and use event delegation to determine which element was changed
-        //If IE use attachEvent, otherwise use addEventListener
         var setEvents = (function() {
-            (document.attachEvent ? document.attachEvent("onchange", handler) : document.addEventListener("change", handler));
+            if(document.addEventListener){
+                document.addEventListener(options.event, handler)
+            }else{
+                var requiredElements = document.getElementsByTagName("input")
+                    ,length = requiredElements.length;
+
+                while(length--){
+                    if(hasClass(requiredElements[length]), "required")
+                        requiredElements[length].attachEvent("on" + options.event, handler, false);
+                }
+
+            }
         })();
 
     })(options.rules);
@@ -319,29 +330,28 @@ var validator = (function(o) {
     };
 
     //Check to see if the target has a class [cName]
-
     function hasClass(target, cName) {
         var regex = new RegExp("(?:^|\\s)" + cName + "(?!\\S)");
         return target.className.match(regex);
     };
 
     //Remove a class [cName] from target
-
     function removeClass(target, cName) {
         var regex = new RegExp("(?:^|\\s)" + cName + "(?!\\S)", "g");
         target.className = target.className.replace(regex, '')
     };
 
     //Add a class [cName] to target
-
     function addClass(target, cName) {
         target.className = target.className + " " + cName;
     };
 
+    //Trim whitespace from string
     function trimString(str) {
         return str.replace(/^\s+|\s+$/g, '');
     };
 
+    //Parse a given date with the separator in options.date.separator
     function parseDate(dateString) {
         var date = dateString.split(options.date.separator);
 
@@ -353,6 +363,7 @@ var validator = (function(o) {
 
     };
 
+    //Parse a given time with the separator in options.time.separator
     function parseTime(timeString) {
         var time = timeString.split(options.time.separator);
 
@@ -363,27 +374,7 @@ var validator = (function(o) {
         }
     };
 
-    function convert(val, type) {
-
-        switch (type) {
-            case "int":
-                val = parseInt(val, 10);
-                break;
-            case "float":
-                val = parseFloat(val);
-                break;
-            case "string":
-                val = val.toString();
-                break;
-            default:
-                console.log("Invalid type " + type + " passed into convert function");
-        };
-
-        return val;
-    };
-
     //Set the success class to the target
-
     function setSuccess(target) {
         if (!hasClass(target, options.success)) {
             if (hasClass(target, options.error)) {
@@ -394,7 +385,6 @@ var validator = (function(o) {
     };
 
     //Set the error class to the target
-
     function setError(target) {
         if (!hasClass(target, options.error)) {
             if (hasClass(target, options.success)) {
@@ -403,5 +393,9 @@ var validator = (function(o) {
             addClass(target, options.error);
         }
     };
+
+    function getEventType(event, type){
+       return (type === "IE" ? "on" + event : event);
+    }
 
 });
