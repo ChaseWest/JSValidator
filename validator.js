@@ -319,18 +319,21 @@ var validator = (function(o) {
     };
 
     //Check to see if the target has a class [cName]
+
     function hasClass(target, cName) {
         var regex = new RegExp("(?:^|\\s)" + cName + "(?!\\S)");
         return target.className.match(regex);
     };
 
     //Remove a class [cName] from target
+
     function removeClass(target, cName) {
         var regex = new RegExp("(?:^|\\s)" + cName + "(?!\\S)", "g");
         target.className = target.className.replace(regex, '')
     };
 
     //Add a class [cName] to target
+
     function addClass(target, cName) {
         target.className = target.className + " " + cName;
     };
@@ -380,6 +383,7 @@ var validator = (function(o) {
     };
 
     //Set the success class to the target
+
     function setSuccess(target) {
         if (!hasClass(target, options.success)) {
             if (hasClass(target, options.error)) {
@@ -390,6 +394,7 @@ var validator = (function(o) {
     };
 
     //Set the error class to the target
+
     function setError(target) {
         if (!hasClass(target, options.error)) {
             if (hasClass(target, options.success)) {
