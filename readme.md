@@ -42,7 +42,7 @@ The following input types are defined by default:
 
 The object `options.date`:
 
-  date: {
+  	date: {
             separator: "/",
             regex: /^(0[1-9]|[1-9]|1[012])[- //.](0[1-9]|[1-9]|[12][0-9]|3[01])[- //.][(19|20)\d\d]|[\d\d]$/,
             message: "Invalid Date - Please ensure date values are within their correct ranges."
@@ -50,7 +50,10 @@ The object `options.date`:
 
 Corresponds to an object within `options.rules` with the same name (`date`):
 
- 	"date": {
+		options.rules: {
+      ...
+
+ 			date: {
                 isDate: function(val) {
                     var date = parseDate(val);
 
@@ -59,6 +62,7 @@ Corresponds to an object within `options.rules` with the same name (`date`):
                         "status": (date.month > 0 && date.month <= 12) && (date.day > 0 && date.day <= 31) && (date.year.length === 2 || date.year.length === 4)
                     };
                 },
+
                 matchDateFormat: function(val) {
                     return {
                         "message": "Invalid Date - Please ensure the date is in the form mm/dd/yyyy or mm/dd/yy",
@@ -66,3 +70,6 @@ Corresponds to an object within `options.rules` with the same name (`date`):
                     };
                 }
             }
+
+       ...
+    }
