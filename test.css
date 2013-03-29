@@ -1,0 +1,13 @@
+input{
+	padding: 2px;
+	border-radius: 4px;
+}
+.success{
+   background-color: #ABFFB1 !important;
+}
+.error{
+   background-color: #FFABAB !important;
+}
+.required{
+   background-color: #F9FFAB;
+}
