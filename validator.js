@@ -208,12 +208,9 @@ var validator = (function(o) {
         var handler = function(e) {
             var target = (e.target ? e.target : window.event.srcElement);
 
-
             if (hasClass(target, "required")) {
-                var classes = (target.getAttribute("class") ? target.getAttribute("class").split(" ") : target.className.split(" "));
+                var classes = target.className.split(" ");
                 var errors = [];
-
-                console.log(classes);
 
                 //for each class
                 for (var i = 0; i < classes.length; i++) {
@@ -295,6 +292,8 @@ var validator = (function(o) {
         Math.max have their original value.
 
         Define indexOf if it's not defined for the browser already (older versions of IE).
+
+        https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/indexOf
     */
     if (!Array.prototype.indexOf) {
         Array.prototype.indexOf = function(searchElement /*, fromIndex */ ) {
